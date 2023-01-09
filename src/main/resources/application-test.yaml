@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://db:5432/sf_tuts"
+    username: "postgres"
+    password: "postgres"
+    driverClassName: "org.postgresql.Driver"
+  liquibase:
+    #    enabled: false
+    change-log: "classpath:db.changelog/changelog-master.xml"
+    database-change-log-lock-table: "DATABASECHANGELOGLOCK"
+    database-change-log-table: "DATABASECHANGELOG"
+    default-schema: "public"
+    url: "jdbc:postgresql://db:5432/sf_tuts"
+    user: "postgres"
+    password: "postgres"
+    contexts: "local"
+authorization:
+  token: "Bearer 3206f8330b48b01774f5d4d73b3bac0ac1531ad85452cec1d7df1a106e979b55"

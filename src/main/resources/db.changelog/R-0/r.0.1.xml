@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="r.0.0.1" author="schiriac" context="local">
+
+        <createTable tableName="user_entity">
+            <column name="id" type="INT8" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(100)"/>
+            <column name="email" type="VARCHAR(100)"/>
+            <column name="gender" type="VARCHAR(100)"/>
+            <column name="status" type="VARCHAR(100)"/>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="r.0.0.2" author="schiriac" context="local">
+
+        <createTable tableName="post_entity">
+            <column name="id" type="INT8" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="INT8">
+                <constraints foreignKeyName="fk_post_to_user"
+                             references="user_entity(id)" nullable="false"/>
+            </column>
+
+            <column name="data" type="jsonb" defaultValue="{}"/>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="r.0.0.3" author="schiriac" context="local">
+
+        <createTable tableName="file_entity">
+            <column name="id" type="INT8" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="INT8"/>
+            <column name="filename" type="VARCHAR(100)"/>
+            <column name="type" type="VARCHAR(100)"/>
+            <column name="size" type="bigint"/>
+            <column name="data" type="bytea"/>
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>

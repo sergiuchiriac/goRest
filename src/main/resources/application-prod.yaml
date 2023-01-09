@@ -1,0 +1,20 @@
+spring:
+  profiles:
+    active: prod
+  application:
+    name: "goRest-service"
+  datasource:
+    url: "jdbc:postgresql://db:5432/sf_tuts"
+    username: "postgres"
+    password: "postgres"
+    driverClassName: "org.postgresql.Driver"
+  liquibase:
+    #    enabled: false
+    change-log: "classpath:db.changelog/changelog-master.xml"
+    database-change-log-lock-table: "DATABASECHANGELOGLOCK"
+    database-change-log-table: "DATABASECHANGELOG"
+    default-schema: "public"
+    url: "jdbc:postgresql://db:5432/sf_tuts"
+    user: "postgres"
+    password: "postgres"
+    contexts: "local"

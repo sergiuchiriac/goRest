@@ -1,0 +1,379 @@
+{
+	"info": {
+		"_postman_id": "44afd9b3-b374-4cff-bc4f-2e50a6242123",
+		"name": "GoRest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1350190"
+	},
+	"item": [
+		{
+			"name": "/v1/job/start",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/job/start",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"job",
+						"start"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/job/status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/job/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"job",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/job/stop",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/job/stop",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"job",
+						"stop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "3206f8330b48b01774f5d4d73b3bac0ac1531ad85452cec1d7df1a106e979b55",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"name\":\"Testing Name114\",\n \"gender\":\"male\",\n \"email\":\"testingName114@test.com\",\n \"status\":\"active\"\n }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "active",
+						"value": "true",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/v1/users?size=20&page=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"users"
+					],
+					"query": [
+						{
+							"key": "active",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "size",
+							"value": "20"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/users/{userId}",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "3206f8330b48b01774f5d4d73b3bac0ac1531ad85452cec1d7df1a106e979b55",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"name\": \"Testing Name114\",\n\"email\": \"testingName114@test.com\",\n\"gender\": \"male\",\n\"status\": \"active\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/users/33660",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"users",
+						"33660"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/users/{userId}",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "3206f8330b48b01774f5d4d73b3bac0ac1531ad85452cec1d7df1a106e979b55",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/v1/users/33674",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"users",
+						"33674"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/users/{userId}/files",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/sergiuchiriac/Desktop/logo.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/users/33674/files",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"users",
+						"33674",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/users/{userId}/files/{fileId}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/users/33674/files/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"users",
+						"33674",
+						"files",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/users/{userId}/files",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "3206f8330b48b01774f5d4d73b3bac0ac1531ad85452cec1d7df1a106e979b55",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/sergiuchiriac/Desktop/logo.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/users/1/files",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"users",
+						"1",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/users/posts?body={bodyText}&title={titeText}&name={userName}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/users/posts?name=Chandranath Adiga CPA",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"users",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "bodyText",
+							"value": "Umerus conventus demitto",
+							"disabled": true
+						},
+						{
+							"key": "titleText",
+							"value": "Tibi",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "Chandranath Adiga CPA"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
