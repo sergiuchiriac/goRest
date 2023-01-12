@@ -1,4 +1,4 @@
-package com.rest.goRest.service;
+package com.rest.goRest.service.impl;
 
 import com.rest.goRest.dao.entity.PostEntity;
 import com.rest.goRest.dao.entity.UserEntity;
@@ -118,7 +118,7 @@ public class UserCrudServiceImplTest {
     void shouldDeleteUser(@Mock UserEntity userEntity) {
         when(userRepository.findById(anyLong())).thenReturn(Optional.ofNullable(userEntity));
         userCrudService.deleteUser(USER_ID, TOKEN);
-        verify(userRepository).delete(userEntity);
+        verify(userRepository).save(userEntity);
     }
 
     @Test

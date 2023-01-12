@@ -1,13 +1,13 @@
-package com.rest.goRest.service;
+package com.rest.goRest.service.impl;
 
-import com.rest.goRest.dao.entity.FileMetadataEntity;
 import com.rest.goRest.dao.repository.FileRepository;
 import com.rest.goRest.exception.FileStorageException;
 import com.rest.goRest.exception.RecordNotFoundException;
 import com.rest.goRest.mapper.FileMetadataMapper;
 import com.rest.goRest.rest.response.FileMetadata;
+import com.rest.goRest.service.FileService;
 import lombok.AllArgsConstructor;
-import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,48 +22,16 @@ import java.util.List;
 
 
 @Service
+@Profile({"dev"})
 @AllArgsConstructor
-public class FileServiceImpl {
+public class DevFileServiceImpl implements FileService {
 
     private final FileRepository fileRepository;
     private final FileMetadataMapper fileMapper;
-    private Environment environment;
 
-    public List<FileMetadata> saveFile(Long userId, MultipartFile file) throws IOException {
-        if (isProd()) {
-            saveFileInDatabase(userId, file);
-            return fetchFilesMetadata(userId);
-        } else {
-            saveFileOnDisc(userId, file);
-            return fetchFileMetadataFromDisc(userId);
-        }
-    }
-
-    public boolean isProd() {
-        String[] activeProfiles = environment.getActiveProfiles();
-        for (String profile : activeProfiles) {
-            if (profile.equals("prod")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Transactional
-    public void saveFileInDatabase(Long userId, MultipartFile file) throws IOException {
-        String filename = file.getOriginalFilename();
-        String type = file.getContentType();
-        long size = file.getSize();
-        byte[] data = file.getBytes();
-
-        FileMetadataEntity metadata = new FileMetadataEntity();
-        metadata.setUserId(userId);
-        metadata.setFilename(filename);
-        metadata.setType(type);
-        metadata.setSize(size);
-        metadata.setData(data);
-
-        fileRepository.save(metadata);
+    public List<FileMetadata> saveFile(Long userId, MultipartFile file) {
+        saveFileOnDisc(userId, file);
+        return fetchFileMetadataFromDisc(userId);
     }
 
     public void saveFileOnDisc(Long userId, MultipartFile file) {
@@ -82,7 +50,7 @@ public class FileServiceImpl {
         final String directory = "files/" + userId;
         final Path dirPath = Paths.get(directory);
         List<FileMetadata> metadataList = new ArrayList<>();
-        try(var fileList = Files.list(dirPath)) {
+        try (var fileList = Files.list(dirPath)) {
             fileList.forEach(filePath -> {
                 try {
                     BasicFileAttributes attr = Files.readAttributes(filePath, BasicFileAttributes.class);

@@ -1,4 +1,4 @@
-package com.rest.goRest.service;
+package com.rest.goRest.service.impl;
 
 import com.rest.goRest.dao.entity.UserEntity;
 import com.rest.goRest.dao.repository.UserRepository;
@@ -50,6 +50,7 @@ public class UserJobServiceImplTest {
         assertNotNull(result);
         assertSame(postDto, result.get(0));
     }
+
     @Test
     void shouldSaveToData(@Mock UserDto userDto, @Mock PostDto postDto, @Mock UserEntity userEntity) {
         when(userMapper.map(any(UserDto.class))).thenReturn(userEntity);

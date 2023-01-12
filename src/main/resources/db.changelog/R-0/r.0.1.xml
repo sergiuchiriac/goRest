@@ -8,7 +8,7 @@
     <changeSet id="r.0.0.1" author="schiriac" context="local">
 
         <createTable tableName="user_entity">
-            <column name="id" type="INT8" autoIncrement="true">
+            <column name="id" type="INT8">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="VARCHAR(100)"/>
@@ -47,6 +47,24 @@
             <column name="size" type="bigint"/>
             <column name="data" type="bytea"/>
         </createTable>
+
+    </changeSet>
+
+    <changeSet id="r.0.0.4" author="schiriac" context="local">
+        <createTable tableName="token_entity">
+            <column name="id" type="INT8" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="token" type="VARCHAR(1000)"/>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="r.0.0.5" author="schiriac" context="local">
+
+        <sql>
+            INSERT INTO token_entity(id, token) values (1, 'Bearer 3206f8330b48b01774f5d4d73b3bac0ac1531ad85452cec1d7df1a106e979b55');
+        </sql>
 
     </changeSet>
 

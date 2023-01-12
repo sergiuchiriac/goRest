@@ -1,4 +1,4 @@
-package com.rest.goRest.service;
+package com.rest.goRest.service.impl;
 
 import com.rest.goRest.dao.repository.UserRepository;
 import com.rest.goRest.exception.InvalidDataException;

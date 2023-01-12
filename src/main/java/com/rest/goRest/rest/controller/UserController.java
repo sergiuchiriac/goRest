@@ -5,9 +5,9 @@ import com.rest.goRest.rest.response.FileMetadata;
 import com.rest.goRest.rest.response.JobStatus;
 import com.rest.goRest.rest.response.PostResponse;
 import com.rest.goRest.rest.response.UserResponse;
-import com.rest.goRest.service.FileServiceImpl;
-import com.rest.goRest.service.UserCrudServiceImpl;
-import com.rest.goRest.service.UserJobServiceImpl;
+import com.rest.goRest.service.FileService;
+import com.rest.goRest.service.impl.UserCrudServiceImpl;
+import com.rest.goRest.service.impl.UserJobServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +37,7 @@ public class UserController {
 
     private final UserJobServiceImpl userJobService;
     private final UserCrudServiceImpl userCrudService;
-    private final FileServiceImpl fileService;
+    private final FileService fileService;
 
     @PostMapping("/job/start")
     public ResponseEntity<Instant> startJob() {
@@ -76,9 +76,10 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{userId}")
-    public void deleteUser(@PathVariable("userId") Long userId,
-                           @RequestHeader(name = "Authorization") String token) {
+    public ResponseEntity<Void> deleteUser(@PathVariable("userId") Long userId,
+                                           @RequestHeader(name = "Authorization") String token) {
         userCrudService.deleteUser(userId, token);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/users/{userId}/files")

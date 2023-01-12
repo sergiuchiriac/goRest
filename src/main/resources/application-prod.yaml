@@ -1,8 +1,4 @@
 spring:
-  profiles:
-    active: prod
-  application:
-    name: "goRest-service"
   datasource:
     url: "jdbc:postgresql://db:5432/sf_tuts"
     username: "postgres"
