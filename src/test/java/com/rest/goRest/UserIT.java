@@ -85,10 +85,13 @@ public class UserIT {
     @Sql(scripts = "/db/delete-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void shouldGetUsers() throws JsonProcessingException {
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", TOKEN);
+        HttpEntity<UserRequest> requestEntity = new HttpEntity<>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/v1/users"),
                 HttpMethod.GET,
-                null,
+                requestEntity,
                 String.class
         );
 
@@ -109,11 +112,13 @@ public class UserIT {
     @Sql(scripts = "/db/insert-initial-entities.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/db/delete-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void shouldGetUsersWithStatusActive() throws JsonProcessingException {
-
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", TOKEN);
+        HttpEntity<UserRequest> requestEntity = new HttpEntity<>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/v1/users?active=true"),
                 HttpMethod.GET,
-                null,
+                requestEntity,
                 String.class
         );
 
@@ -208,6 +213,7 @@ public class UserIT {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        headers.add("Authorization", TOKEN);
 
         Map<String, String> params = new HashMap<>();
         params.put("userId", "4255");
@@ -236,14 +242,17 @@ public class UserIT {
     @Sql(scripts = "/db/insert-initial-entities.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/db/delete-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void shouldGetFile() throws JsonProcessingException {
-
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Authorization", TOKEN);
+        HttpEntity<UserRequest> requestEntity = new HttpEntity<>(null, headers);
         Map<String, String> params = new HashMap<>();
         params.put("userId", "1");
         params.put("fileId", "1");
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/v1/users/{userId}/files/{fileId}"),
                 HttpMethod.GET,
-                null,
+                requestEntity,
                 String.class,
                 params
         );
@@ -262,13 +271,16 @@ public class UserIT {
     @Sql(scripts = "/db/insert-initial-entities.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/db/delete-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void shouldGetFiles() throws JsonProcessingException {
-
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Authorization", TOKEN);
+        HttpEntity<UserRequest> requestEntity = new HttpEntity<>(null, headers);
         Map<String, String> params = new HashMap<>();
         params.put("userId", "1");
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/v1/users/{userId}/files"),
                 HttpMethod.GET,
-                null,
+                requestEntity,
                 String.class,
                 params
         );
@@ -288,13 +300,16 @@ public class UserIT {
     @Sql(scripts = "/db/insert-initial-entities.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/db/delete-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void shouldGetPostsByName() throws JsonProcessingException {
-
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Authorization", TOKEN);
+        HttpEntity<UserRequest> requestEntity = new HttpEntity<>(null, headers);
         Map<String, String> params = new HashMap<>();
         params.put("name", "Sweta Asan");
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/v1/users/posts"),
                 HttpMethod.GET,
-                null,
+                requestEntity,
                 String.class,
                 params
         );
@@ -314,13 +329,16 @@ public class UserIT {
     @Sql(scripts = "/db/insert-initial-entities.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/db/delete-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void shouldGetPostsByTitle() throws JsonProcessingException {
-
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Authorization", TOKEN);
+        HttpEntity<UserRequest> requestEntity = new HttpEntity<>(null, headers);
         Map<String, String> params = new HashMap<>();
         params.put("title", "Tibi");
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/v1/users/posts"),
                 HttpMethod.GET,
-                null,
+                requestEntity,
                 String.class,
                 params
         );
@@ -341,13 +359,47 @@ public class UserIT {
     @Sql(scripts = "/db/insert-initial-entities.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/db/delete-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void shouldGetPostsByBody() throws JsonProcessingException {
-
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Authorization", TOKEN);
+        HttpEntity<UserRequest> requestEntity = new HttpEntity<>(null, headers);
         Map<String, String> params = new HashMap<>();
         params.put("body", "Umerus");
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/v1/users/posts"),
                 HttpMethod.GET,
-                null,
+                requestEntity,
+                String.class,
+                params
+        );
+
+        List<PostResponse> fileObject = objectMapper.readValue(response.getBody(), new TypeReference<>() {
+        });
+
+        Assertions.assertEquals(1, fileObject.get(0).getId());
+        Assertions.assertEquals(1, fileObject.get(0).getUserId());
+        Assertions.assertEquals("Sweta Asan", fileObject.get(0).getUserName());
+        Assertions.assertEquals(TITLE, fileObject.get(0).getTitle());
+        Assertions.assertEquals(BODY, fileObject.get(0).getBody());
+
+    }
+
+    @Test
+    @Sql(scripts = "/db/insert-initial-entities.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "/db/delete-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    public void shouldGetPostsByTextBodyAndName() throws JsonProcessingException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Authorization", TOKEN);
+        HttpEntity<UserRequest> requestEntity = new HttpEntity<>(null, headers);
+        Map<String, String> params = new HashMap<>();
+        params.put("title", "Tibi");
+        params.put("name", "Sweta Asan");
+        params.put("body", "Umerus");
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/v1/users/posts"),
+                HttpMethod.GET,
+                requestEntity,
                 String.class,
                 params
         );

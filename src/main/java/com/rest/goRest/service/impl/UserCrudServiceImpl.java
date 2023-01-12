@@ -1,4 +1,4 @@
-package com.rest.goRest.service;
+package com.rest.goRest.service.impl;
 
 
 import com.rest.goRest.dao.entity.UserEntity;
@@ -90,7 +90,8 @@ public class UserCrudServiceImpl {
     private void deleteUserInDatabase(Long userId) {
         var user = userRepository.findById(userId)
                 .orElseThrow(() -> new RecordNotFoundException("User not found"));
-        userRepository.delete(user);
+        user.setStatus("deleted");
+        userRepository.save(user);
     }
 
     @Transactional(readOnly = true)

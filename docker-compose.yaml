@@ -23,6 +23,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
     depends_on:
       - "db"
+      - "template-build"
     links:
       - "db:db"
 

@@ -13,6 +13,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
 @Data
 public class PostSpecification implements Specification<PostEntity> {
@@ -22,19 +25,17 @@ public class PostSpecification implements Specification<PostEntity> {
 
     @Override
     public Predicate toPredicate(Root<PostEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-        Predicate p = cb.conjunction();
-
+        List<Predicate> predicates = new ArrayList<>();
         if (bodyText != null) {
-            p = getBodyPredicate(root, cb, bodyText);
+            predicates.add(getBodyPredicate(root, cb, bodyText));
         }
         if (titleText != null) {
-            p = getTitlePredicate(root, cb, titleText);
+            predicates.add(getTitlePredicate(root, cb, titleText));
         }
         if (userName != null) {
-            p = getNamePredicate(root, cb, userName);
+            predicates.add(getNamePredicate(root, cb, userName));
         }
-
-        return p;
+        return cb.and(predicates.toArray(Predicate[]::new));
     }
 
     private Predicate getTitlePredicate(Root<PostEntity> root, CriteriaBuilder cb, String title) {

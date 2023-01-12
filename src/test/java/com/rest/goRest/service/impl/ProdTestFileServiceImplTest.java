@@ -1,4 +1,4 @@
-package com.rest.goRest.service;
+package com.rest.goRest.service.impl;
 
 import com.rest.goRest.dao.entity.FileMetadataEntity;
 import com.rest.goRest.dao.repository.FileRepository;
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.core.env.Environment;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -25,24 +24,20 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class FileServiceImplTest {
+public class ProdTestFileServiceImplTest {
 
     private static final Long LONG_ID = 1L;
     @Mock
     private FileRepository fileRepository;
     @Mock
     private FileMetadataMapper fileMapper;
-    @Mock
-    private Environment environment;
-
     @InjectMocks
-    private FileServiceImpl fileService;
+    private ProdTestFileServiceImpl fileService;
 
     @Test
     void shouldSaveFile(@Mock MultipartFile multipartFile,
                         @Mock FileMetadataEntity fileMetadataEntity,
                         @Mock FileMetadata fileMetadata) throws IOException {
-        when(environment.getActiveProfiles()).thenReturn(new String[]{"prod"});
         when(fileRepository.findFileMetadataByUserId(anyLong())).thenReturn(List.of(fileMetadataEntity));
         when(fileMapper.map(any(FileMetadataEntity.class))).thenReturn(fileMetadata);
 

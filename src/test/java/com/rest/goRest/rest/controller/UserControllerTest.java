@@ -5,9 +5,9 @@ import com.rest.goRest.rest.response.FileMetadata;
 import com.rest.goRest.rest.response.JobStatus;
 import com.rest.goRest.rest.response.PostResponse;
 import com.rest.goRest.rest.response.UserResponse;
-import com.rest.goRest.service.FileServiceImpl;
-import com.rest.goRest.service.UserCrudServiceImpl;
-import com.rest.goRest.service.UserJobServiceImpl;
+import com.rest.goRest.service.impl.ProdTestFileServiceImpl;
+import com.rest.goRest.service.impl.UserCrudServiceImpl;
+import com.rest.goRest.service.impl.UserJobServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -42,7 +42,7 @@ public class UserControllerTest {
     @Mock
     private UserCrudServiceImpl userCrudService;
     @Mock
-    private FileServiceImpl fileService;
+    private ProdTestFileServiceImpl fileService;
     @Mock
     private UserJobServiceImpl userJobService;
 
